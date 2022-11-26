@@ -3,6 +3,7 @@ import {useRouter} from 'next/router'
 import styles from '../styles/Home.module.css'
 import {AppContext} from '../contexts/AppContext'
 import {List} from '../types'
+import {AddList} from '../components/AddList'
 
 export default function Home() {
   const router = useRouter()
@@ -12,11 +13,11 @@ export default function Home() {
   }
   return (
     <>
-      <div className="grid grid-rows-16 divide-y max-h-screen overflow-y-auto">
+      <div className="grid grid-rows-18 max-h-screen px-4">
         <h1 className="text-3xl font-bold underline row-span-1">
           List of lists
         </h1>
-        <div className="overflow-y-auto row-span-13">
+        <div className="overflow-y-auto row-span-15">
           <table className="table w-full">
             <thead>
               <tr>
@@ -34,8 +35,8 @@ export default function Home() {
             </tbody>
           </table>
         </div>
-        <div className="row-span-1">
-          form
+        <div className="row-span-2">
+          <AddList />
         </div>
       </div>
     </>
