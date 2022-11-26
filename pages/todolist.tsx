@@ -8,6 +8,7 @@ export default function Home() {
   return (
     <div>
       Todo list
+      {JSON.stringify(router.query)}
       {JSON.stringify(lists)}
     </div>
   )
