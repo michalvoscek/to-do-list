@@ -1,33 +1,31 @@
 import React, {useState, useEffect} from 'react'
 import {fetchAll} from '../utlls/comm'
+import {List, Item} from '../types'
 
 interface AppState {
-  lists: string[][],
-  items: string[][],
+  lists: List[],
   filter: 'all' | 'active' | 'finished',
   setFilter: (value: 'all' | 'active' | 'finished') => void,
   addList: (name: string) => void,
-  addItem: (title: string, description: string, deadline: string) => void
+  addItem: (listId: string, item: Item) => void
 }
 
 export const AppContext = React.createContext<AppState | null>(null)
 
 export const DataLoader = (props: any) => {
-  const [lists, setLists] = useState<string[][]>([])
-  const [items, setItems] = useState<string[][]>([])
+  const [lists, setLists] = useState<List[]>([])
   const [filter, setFilter] = useState<'all' | 'active' | 'finished'>('all')
   const addList = (name: string) => {
     // todo
   }
-  const addItem = (title: string, description: string, deadline: string) => {
+  const addItem = (listId: string, item: Item) => {
     // todo
   }
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetchAll()
-      setLists(res.lists)
-      setItems(res.items)
+      setLists(res)
     }
     fetchData()
   }, [])
@@ -36,7 +34,6 @@ export const DataLoader = (props: any) => {
     <AppContext.Provider
       value={{
         lists,
-        items,
         filter,
         setFilter,
         addList,

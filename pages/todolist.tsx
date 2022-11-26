@@ -1,11 +1,14 @@
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
+import {useContext} from 'react'
+import {AppContext} from '../contexts/AppContext'
 
 export default function Home() {
   const router = useRouter()
-  const q = JSON.stringify(router.query)
+  const {lists} = useContext(AppContext)!
   return (
     <div>
-      Todo list {q}
+      Todo list
+      {JSON.stringify(lists)}
     </div>
   )
 }
