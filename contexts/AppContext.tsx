@@ -7,7 +7,8 @@ interface AppState {
   filter: 'all' | 'active' | 'finished',
   setFilter: (value: 'all' | 'active' | 'finished') => void,
   addList: (name: string) => void,
-  addItem: (listId: string, item: Item) => void
+  addItem: (listId: string, item: Item) => void,
+  fetchData: () => Promise<void>,
 }
 
 export const AppContext = React.createContext<AppState | null>(null)
@@ -21,12 +22,11 @@ export const DataLoader = (props: any) => {
   const addItem = (listId: string, item: Item) => {
     // todo
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetchAll()
-      setLists(res)
-    }
+  const fetchData = async () => {
+    const res = await fetchAll()
+    setLists(res)
+  }
+  useEffect(() => { 
     fetchData()
   }, [])
 
@@ -38,6 +38,7 @@ export const DataLoader = (props: any) => {
         setFilter,
         addList,
         addItem,
+        fetchData,
       }}>
       {props.children}
     </AppContext.Provider>
