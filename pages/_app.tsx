@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import "react-datepicker/dist/react-datepicker.css"
 import type { AppProps } from 'next/app'
 import {DataLoader} from '../contexts/AppContext'
 import {Layout} from '../components/Layout'

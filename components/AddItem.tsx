@@ -1,9 +1,11 @@
 import {useContext} from 'react'
-import {useForm} from 'react-hook-form'
+import {useForm, Controller} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {z} from 'zod'
 import {addItem} from '../utlls/comm'
 import {AppContext} from '../contexts/AppContext'
+import DatePicker from 'react-datepicker'
+import * as dt from 'date-fns'
 
 const schema = z.object({
   title: z.string().min(1, { message: 'Required' }),
@@ -17,7 +19,7 @@ type AddItemProps = {
 
 export const AddItem = ({listId}: AddItemProps) => {
   const {fetchData} = useContext(AppContext)!
-  const {register, handleSubmit, formState: { errors }, reset} = useForm({resolver: zodResolver(schema)})
+  const {register, handleSubmit, formState: {errors}, reset, control} = useForm({resolver: zodResolver(schema)})
   const onSubmit = async (data: any) => {
     const {title, description, deadline} = data
     await addItem(listId, title, description, deadline)
@@ -36,7 +38,20 @@ export const AddItem = ({listId}: AddItemProps) => {
           {errors.description && <span>{errors.description.message as string}</span>}
         </div>
         <div className="">
-          <input className="input input-bordered w-full input-md" {...register('deadline')} placeholder="Deadline" />
+        <Controller
+          control={control}
+          name="deadline"
+          render={({field: {onChange, value}}) => (
+            <DatePicker
+              className="input input-bordered w-full input-md"
+              placeholderText="Deadline"
+              showTimeSelect
+              dateFormat="yyyy-MM-dd HH:mm"
+              selected={value ? dt.parse(value, 'yyyy-MM-dd HH:mm', new Date()) : null}
+              onChange={(val) => onChange(dt.format(val!, 'yyyy-MM-dd HH:mm'))}
+            />
+          )}
+        />
           {errors.deadline && <span>{errors.deadline.message as string}</span>}
         </div>
         <button type="submit" value="Submit" className="btn">Add List</button>
