@@ -11,16 +11,26 @@ export default function ToDoList() {
   const {lists, fetchData} = useContext(AppContext)!
   const list: List = lists[listId]
   const [filter, setFilter] = useState<'all' | 'active' | 'finished'>('all')
+  const [searchQuery, setSearchQuery] = useState<string>('')
 
   const items: Item[] = useMemo(() => {
     if (!list) return []
-    return list.items.filter((item: Item) => {
-      if (filter === 'all') return true
-      if (filter === 'active' && !item.finished) return true
-      if (filter === 'finished' && item.finished) return true
-      return false
-    })
-  }, [lists, filter, listId])
+    let res = list.items
+    if (filter !== 'all') {
+      res = res.filter((item: Item) => {
+        if (filter === 'active' && !item.finished) return true
+        if (filter === 'finished' && item.finished) return true
+        return false
+      })
+    }
+    if (searchQuery) {
+      res = res.filter((item: Item) => {
+        if (item.title.includes(searchQuery) || item.description.includes(searchQuery)) return true
+        return false
+      })
+    }
+    return res
+  }, [lists, filter, listId, searchQuery])
   
   if (!list) return (<div>Loading...</div>)
   
@@ -47,6 +57,7 @@ export default function ToDoList() {
           <option value="active">Active</option>
           <option value="finished">Finished</option>
         </select>
+        <input type="text" className="input input-bordered w-full max-w-xs" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
       </div>
       <div className="overflow-y-auto row-span-15">
       {items.map((item: Item) => (
