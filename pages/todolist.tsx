@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router'
-import {useContext, useMemo} from 'react'
+import {useContext, useMemo, useState} from 'react'
 import {AppContext} from '../contexts/AppContext'
 import {List, Item} from '../types'
 import {AddItem} from '../components/AddItem'
@@ -8,8 +8,10 @@ import {markFinished, deleteItem} from '../utlls/comm'
 export default function ToDoList() {
   const router = useRouter()
   const listId: string = router.query.id as string
-  const {lists, fetchData, filter, setFilter} = useContext(AppContext)!
+  const {lists, fetchData} = useContext(AppContext)!
   const list: List = lists[listId]
+  const [filter, setFilter] = useState<'all' | 'active' | 'finished'>('all')
+
   const items: Item[] = useMemo(() => {
     if (!list) return []
     return list.items.filter((item: Item) => {
@@ -19,7 +21,9 @@ export default function ToDoList() {
       return false
     })
   }, [lists, filter, listId])
+  
   if (!list) return (<div>Loading...</div>)
+  
   const onFinishedClicked = (itemId: string) => async () => {
     await markFinished(listId, itemId)
     await fetchData()

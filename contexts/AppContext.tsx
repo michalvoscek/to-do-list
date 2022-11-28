@@ -6,8 +6,6 @@ import {List, Item} from '../types'
 interface AppState {
   lists: {[key: string]: List},
   listsOrder: string[],
-  filter: 'all' | 'active' | 'finished',
-  setFilter: (value: 'all' | 'active' | 'finished') => void,
   fetchData: () => Promise<void>,
 }
 
@@ -16,7 +14,6 @@ export const AppContext = React.createContext<AppState | null>(null)
 export const DataLoader = (props: any) => {
   const [lists, setLists] = useState<{[key: string]: List}>({})
   const [listsOrder, setListsOrder] = useState<string[]>([])
-  const [filter, setFilter] = useState<'all' | 'active' | 'finished'>('all')
   const fetchData = async () => {
     const res: List[] = await fetchAll()
     const listsOrder: string[] = res.map((l) => l.id)
@@ -36,8 +33,6 @@ export const DataLoader = (props: any) => {
       value={{
         lists,
         listsOrder,
-        filter,
-        setFilter,
         fetchData,
       }}>
       {props.children}
