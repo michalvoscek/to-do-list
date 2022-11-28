@@ -1,2 +1,11 @@
+.content {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 40px 50px 1fr 310px;
+}
 
+.filter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 

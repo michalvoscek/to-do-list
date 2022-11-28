@@ -1,5 +1,6 @@
 import {useRouter} from 'next/router'
 import {useContext, useMemo, useState} from 'react'
+import styles from '../styles/ToDoList.module.css'
 import {AppContext} from '../contexts/AppContext'
 import {List, Item} from '../types'
 import {AddItem} from '../components/AddItem'
@@ -48,33 +49,39 @@ export default function ToDoList() {
   }
 
   return (
-    <div className="grid grid-rows-18 max-h-screen px-4">
-      <div>
-        <Title value={list.title} />
+    <div className={`h-full overflow-y-auto px-4 gap-1 ${styles.content}`}>
+      <Title value={list.title} />
+      <div className="grid grid-cols-2 gap-2">
         <select className="select select-bordered w-full max-w-xs" value={filter} onChange={onFilterChange}>
-          <option value="all">All</option>
+          <option value="all">Show All</option>
           <option value="active">Active</option>
           <option value="finished">Finished</option>
         </select>
-        <input type="text" className="input input-bordered w-full max-w-xs" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+        <input
+          placeholder="Search Query"
+          type="text"
+          className="input input-bordered w-full max-w-xs"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
-      <div className="overflow-y-auto row-span-15">
-      {items.map((item: Item) => (
-        <div key={item.id} className="card w-96 bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">{item.title}</h2>
-            <div>Status: {item.finished ? "Finished" : "To Do"}</div>
-            <div>Deadline: {item.deadline}</div>
-            <div>{item.description}</div>
-            <div className="card-actions justify-end">
-              <button onClick={onDeleteClicked(item.id)} className="btn btn-primary">Delete</button>
-              {!item.finished && <button onClick={onFinishedClicked(item.id)} className="btn btn-primary">Mark as finished</button>}
+      <div className="overflow-y-auto flex flex-col gap-4 px-4">
+        {items.map((item: Item) => (
+          <div key={item.id} className="card w-full bg-base-100 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title">{item.title}</h2>
+              <div>Status: {item.finished ? "Finished" : "To Do"}</div>
+              <div>Deadline: {item.deadline}</div>
+              <div>{item.description}</div>
+              <div className="card-actions justify-end">
+                {!item.finished && <button onClick={onFinishedClicked(item.id)} className="btn btn-success">Mark as finished</button>}
+                <button onClick={onDeleteClicked(item.id)} className="btn btn-error">Delete</button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
       </div>
-      <div className="row-span-2">
+      <div>
         <AddItem listId={listId} />
       </div>
     </div>

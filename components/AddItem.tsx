@@ -26,20 +26,20 @@ export const AddItem = ({listId}: AddItemProps) => {
   }
   return (
     <div className="h-full grid items-center">
-      <form className="grid grid-rows-5 gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <div className="row-span-1">
-          <input className="input input-bordered w-full" {...register('title')} />
+      <form className="grid grid-flow-row gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <div className="">
+          <input className="input input-bordered w-full input-md" {...register('title')} placeholder="Title" />
           {errors.title && <span>{errors.title.message as string}</span>}
         </div>
-        <div className="row-span-2">
-          <textarea className="textarea textarea-bordered w-full" {...register('description')} />
+        <div className="">
+          <textarea className="textarea textarea-bordered w-full" {...register('description')} placeholder="Description" />
           {errors.description && <span>{errors.description.message as string}</span>}
         </div>
-        <div className="row-span-1">
-          <input className="input input-bordered w-full" {...register('deadline')} />
+        <div className="">
+          <input className="input input-bordered w-full input-md" {...register('deadline')} placeholder="Deadline" />
           {errors.deadline && <span>{errors.deadline.message as string}</span>}
         </div>
-        <button type="submit" value="Submit" className="btn row-span-1">Add List</button>
+        <button type="submit" value="Submit" className="btn">Add List</button>
       </form>
     </div>
   )
