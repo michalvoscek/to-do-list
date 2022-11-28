@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import {AppContext} from '../contexts/AppContext'
 import {List} from '../types'
 import {AddList} from '../components/AddList'
+import {Title} from '../components/Title'
 
 export default function Home() {
   const router = useRouter()
@@ -12,11 +13,9 @@ export default function Home() {
     router.push(`/todolist?id=${id}`)
   }
   return (
-    <div className="grid grid-rows-18 max-h-screen px-4">
-      <h1 className="text-3xl font-bold underline row-span-1">
-        List of lists
-      </h1>
-      <div className="overflow-y-auto row-span-15">
+    <div className={`px-4 h-full overflow-y-auto ${styles.content}`}>
+      <Title value="List of lists" />
+      <div className="overflow-y-auto">
         <table className="table w-full">
           <thead>
             <tr>
@@ -24,7 +23,7 @@ export default function Home() {
               <th className="text-center">Tasks #</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="overflow-y-auto">
             {listsOrder.map((id: string) => {
               const list: List = lists[id]
               return (
@@ -36,7 +35,7 @@ export default function Home() {
           </tbody>
         </table>
       </div>
-      <div className="row-span-2">
+      <div>
         <AddList />
       </div>
     </div>

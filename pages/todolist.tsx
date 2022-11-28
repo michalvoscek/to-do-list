@@ -4,6 +4,7 @@ import {AppContext} from '../contexts/AppContext'
 import {List, Item} from '../types'
 import {AddItem} from '../components/AddItem'
 import {markFinished, deleteItem} from '../utlls/comm'
+import {Title} from '../components/Title'
 
 export default function ToDoList() {
   const router = useRouter()
@@ -49,9 +50,7 @@ export default function ToDoList() {
   return (
     <div className="grid grid-rows-18 max-h-screen px-4">
       <div>
-        <h1 className="text-3xl font-bold underline row-span-1">
-          {list.title}
-        </h1>
+        <Title value={list.title} />
         <select className="select select-bordered w-full max-w-xs" value={filter} onChange={onFilterChange}>
           <option value="all">All</option>
           <option value="active">Active</option>

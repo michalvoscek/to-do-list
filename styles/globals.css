@@ -8,6 +8,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  height: 100%;
 }
 
 a {
@@ -27,4 +28,12 @@ a {
     color: white;
     background: black;
   }
+}
+
+#__next {
+  height: 100%;
+}
+
+#app-holder {
+  grid-template-rows: 70px auto;
 }
