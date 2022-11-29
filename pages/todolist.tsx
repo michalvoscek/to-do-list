@@ -32,7 +32,7 @@ export default function ToDoList() {
       })
     }
     return res
-  }, [lists, filter, listId, searchQuery])
+  }, [list, filter, searchQuery])
   
   if (!list) return (<div>Loading...</div>)
   
