@@ -10,7 +10,10 @@ import * as dt from 'date-fns'
 const schema = z.object({
   title: z.string().min(1, { message: 'Required' }),
   description: z.string(),
-  deadline: z.string().regex(/[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]/, 'Required format: YYYY-MM-DD HH:MM'),
+  deadline: z.date({
+    required_error: "Please select a date and time",
+    invalid_type_error: "Please insert valid date and time",
+  }),
 });
 
 type AddItemProps = {
@@ -22,10 +25,12 @@ export const AddItem = ({listId}: AddItemProps) => {
   const {register, handleSubmit, formState: {errors}, reset, control} = useForm({resolver: zodResolver(schema)})
   const onSubmit = async (data: any) => {
     const {title, description, deadline} = data
-    await addItem(listId, title, description, deadline)
+    const deadlineString: string = dt.format(deadline, 'yyyy-MM-dd HH:mm')
+    await addItem(listId, title, description, deadlineString)
     await fetchData()
     reset()
   }
+
   return (
     <div className="h-full grid items-center">
       <form className="grid grid-flow-row gap-2" onSubmit={handleSubmit(onSubmit)}>
@@ -47,14 +52,14 @@ export const AddItem = ({listId}: AddItemProps) => {
               placeholderText="Deadline"
               showTimeSelect
               dateFormat="yyyy-MM-dd HH:mm"
-              selected={value ? dt.parse(value, 'yyyy-MM-dd HH:mm', new Date()) : null}
-              onChange={(val) => onChange(dt.format(val!, 'yyyy-MM-dd HH:mm'))}
+              selected={value}
+              onChange={onChange}
             />
           )}
         />
           {errors.deadline && <span>{errors.deadline.message as string}</span>}
         </div>
-        <button type="submit" value="Submit" className="btn">Add List</button>
+        <button type="submit" value="Submit" className="btn">Add Item</button>
       </form>
     </div>
   )
