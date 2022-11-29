@@ -72,7 +72,7 @@ export default function ToDoList() {
               <h2 className="card-title">{item.title}</h2>
               <div>Status: {item.finished ? "Finished" : "To Do"}</div>
               <div>Deadline: {item.deadline}</div>
-              <div>{item.description}</div>
+              <div> <p className="whitespace-pre-line">{item.description}</p></div>
               <div className="card-actions justify-end">
                 {!item.finished && <button onClick={onFinishedClicked(item.id)} className="btn btn-success">Mark as finished</button>}
                 <button onClick={onDeleteClicked(item.id)} className="btn btn-error">Delete</button>
