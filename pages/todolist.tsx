@@ -69,9 +69,9 @@ export default function ToDoList() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <div className="overflow-y-auto flex flex-col gap-4 px-4">
+      <div className="overflow-y-auto flex flex-col gap-4 px-4 items-center">
         {items.map((item: Item) => (
-          <div key={item.id} className="card w-full bg-base-100 shadow-xl">
+          <div key={item.id} className="card bg-base-100 shadow-xl w-full lg:w-1/2">
             <div className="card-body">
               <h2 className="card-title">{item.title}</h2>
               <div>Status: {item.finished ? "Finished" : "To Do"}</div>
