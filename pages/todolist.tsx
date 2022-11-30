@@ -10,7 +10,7 @@ import {Title} from '../components/Title'
 export default function ToDoList() {
   const router = useRouter()
   const listId: string = router.query.id as string
-  const {lists, fetchData} = useContext(AppContext)!
+  const {lists, fetchData, isFetched} = useContext(AppContext)!
   const list: List = lists[listId]
   const [filter, setFilter] = useState<'all' | 'active' | 'finished'>('all')
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -38,7 +38,8 @@ export default function ToDoList() {
     return res
   }, [list, filter, searchQuery])
   
-  if (!list) return (<div>Loading...</div>)
+  if (!isFetched) return (<div>Loading...</div>)
+  if (!list) return (<div>List not found</div>)
   
   const onFinishedClicked = (itemId: string) => async () => {
     await markFinished(listId, itemId)

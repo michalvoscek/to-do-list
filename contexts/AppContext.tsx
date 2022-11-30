@@ -6,12 +6,14 @@ import {List, Item} from '../types'
 interface AppState {
   lists: {[key: string]: List},
   listsOrder: string[],
+  isFetched: boolean,
   fetchData: () => Promise<void>,
 }
 
 export const AppContext = React.createContext<AppState | null>(null)
 
 export const DataLoader = (props: any) => {
+  const [isFetched, setIsFetched] = useState<boolean>(false)
   const [lists, setLists] = useState<{[key: string]: List}>({})
   const [listsOrder, setListsOrder] = useState<string[]>([])
   const fetchData = async () => {
@@ -23,6 +25,7 @@ export const DataLoader = (props: any) => {
     ])(res)
     setListsOrder(listsOrder)
     setLists(lists)
+    setIsFetched(true)
   }
   useEffect(() => { 
     fetchData()
@@ -34,6 +37,7 @@ export const DataLoader = (props: any) => {
         lists,
         listsOrder,
         fetchData,
+        isFetched,
       }}>
       {props.children}
     </AppContext.Provider>
