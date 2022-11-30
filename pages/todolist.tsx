@@ -26,8 +26,12 @@ export default function ToDoList() {
       })
     }
     if (searchQuery) {
+      const lowercaseQuery = searchQuery.toLowerCase()
       res = res.filter((item: Item) => {
-        if (item.title.includes(searchQuery) || item.description.includes(searchQuery)) return true
+        if (
+          item.title.toLowerCase().includes(lowercaseQuery) ||
+          item.description.toLowerCase().includes(lowercaseQuery)
+        ) return true
         return false
       })
     }
