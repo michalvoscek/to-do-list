@@ -69,7 +69,7 @@ export default function ToDoList() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <div className="overflow-y-auto flex flex-col gap-4 px-4 items-center">
+      <div className="overflow-y-auto flex flex-col gap-4 px-4 py-4 items-center">
         {items.map((item: Item) => (
           <div key={item.id} className="card bg-base-100 shadow-xl w-full lg:w-1/2">
             <div className="card-body">
