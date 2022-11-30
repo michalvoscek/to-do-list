@@ -85,7 +85,7 @@ export default function ToDoList() {
           </div>
         ))}
       </div>
-      <div>
+      <div className="flex flex-col items-center">
         <AddItem listId={listId} />
       </div>
     </div>

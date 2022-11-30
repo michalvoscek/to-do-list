@@ -38,7 +38,7 @@ export const AddItem = ({listId}: AddItemProps) => {
   }
 
   return (
-    <div className="h-full grid items-center">
+    <div className="h-full grid items-center w-full lg:w-1/2">
       <form className="grid grid-flow-row gap-2" onSubmit={handleSubmit(onSubmit)}>
         <div className="">
           <input className="input input-bordered w-full input-md" {...register('title')} placeholder="Title" />
