@@ -7,6 +7,12 @@ import {AppContext} from '../contexts/AppContext'
 import DatePicker from 'react-datepicker'
 import * as dt from 'date-fns'
 
+type FormValues = {
+  title: string,
+  description: string,
+  deadline: Date,
+}
+
 const schema = z.object({
   title: z.string().min(1, { message: 'Required' }),
   description: z.string(),
@@ -22,8 +28,8 @@ type AddItemProps = {
 
 export const AddItem = ({listId}: AddItemProps) => {
   const {fetchData} = useContext(AppContext)!
-  const {register, handleSubmit, formState: {errors}, reset, control} = useForm({resolver: zodResolver(schema)})
-  const onSubmit = async (data: any) => {
+  const {register, handleSubmit, formState: {errors}, reset, control} = useForm<FormValues>({resolver: zodResolver(schema)})
+  const onSubmit = async (data: FormValues) => {
     const {title, description, deadline} = data
     const deadlineString: string = dt.format(deadline, 'yyyy-MM-dd HH:mm')
     await addItem(listId, title, description, deadlineString)

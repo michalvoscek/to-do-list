@@ -5,14 +5,18 @@ import {z} from 'zod'
 import {addList} from '../utlls/comm'
 import {AppContext} from '../contexts/AppContext'
 
+type FormValues = {
+  title: string,
+}
+
 const schema = z.object({
   title: z.string().min(1, { message: 'Required' }),
 });
 
 export const AddList = () => {
   const {fetchData} = useContext(AppContext)!
-  const {register, handleSubmit, formState: { errors }, reset} = useForm({resolver: zodResolver(schema)})
-  const onSubmit = async (data: any) => {
+  const {register, handleSubmit, formState: { errors }, reset} = useForm<FormValues>({resolver: zodResolver(schema)})
+  const onSubmit = async (data: FormValues) => {
     await addList(data.title)
     await fetchData()
     reset()
