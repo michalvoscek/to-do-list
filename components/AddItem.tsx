@@ -45,7 +45,7 @@ export const AddItem = ({listId}: AddItemProps) => {
           {errors.title && <span>{errors.title.message as string}</span>}
         </div>
         <div className="">
-          <textarea className="textarea textarea-bordered w-full" {...register('description')} placeholder="Description" />
+          <textarea className="textarea textarea-bordered w-full resize-none" {...register('description')} placeholder="Description" />
           {errors.description && <span>{errors.description.message as string}</span>}
         </div>
         <div className="">
